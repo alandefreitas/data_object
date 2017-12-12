@@ -410,8 +410,7 @@ namespace wpp {
                         return false;
                     }
                     if (make_copy) {
-                        param.parameter_data.reset(
-                                new std::string(std::move(data_object_statement::to_string<T>(parameter))));
+                        param.parameter_data.reset(new std::string(std::move(data_object_statement::to_string<T>(parameter))));
                         param.parameter = (void *) (param.parameter_data.get());
                         param.parameter_typeinfo = typeid(std::string);
                         param.param_type = PARAM_STR;
@@ -451,6 +450,10 @@ namespace wpp {
 
                 bool is_string_hash(const size_t t) {
                     return t == typeid(std::string).hash_code();
+                }
+
+                bool is_nullptr_hash(const size_t t) {
+                    return t == typeid(std::nullptr_t).hash_code();
                 }
 
                 std::string byte_to_string(const std::type_index t, void *data) {
@@ -550,10 +553,15 @@ namespace wpp {
                 }
 
                 template<typename T>
-                std::string to_string(std::enable_if_t<!(is_pure_int<T>::value || std::is_floating_point<T>::value) &&
+                std::string to_string(std::enable_if_t<!(is_pure_int<T>::value || std::is_floating_point<T>::value || std::is_same<T,std::nullptr_t>::value) &&
                                                        (std::is_assignable<std::string, T>::value ||
                                                         is_c_str<T>::value), T> param) {
                     return std::string(param);
+                }
+
+                template<typename T>
+                std::string to_string(std::enable_if_t<std::is_same<T,std::nullptr_t>::value, T> param) {
+                    return std::string("");
                 }
 
                 template<typename T>
@@ -601,6 +609,8 @@ namespace wpp {
                         return param_type::PARAM_FLOAT;
                     } else if (is_bool_hash(t)) {
                         return param_type::PARAM_BOOL;
+                    } else if (is_nullptr_hash(t)) {
+                        return param_type::PARAM_NULL;
                     } else {
                         return param_type::PARAM_STR;
                     }
