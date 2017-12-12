@@ -1,16 +1,16 @@
 # Data Objects for Modern C++
 
-There are few object libraries for Modern C++. Our project tries to accomplish *speed* with *easy syntax* and *simple integration*.  
+There are few **data object** libraries for **Modern C++**. Our project tries to accomplish *speed* with *easy syntax* and *simple integration*.  
 
-* A single header file [`data_object.hpp`](https://github.com/alandefreitas/data_object/) represents a base class for any database connection. Other files represent specific database drivers by defining few  short virtual functions (See the [integrating](#integrating)).
+* A single header file [`data_object.hpp`](https://github.com/alandefreitas/data_object/include/data_object.h) represents a base class for any database connection. Other files represent specific database drivers by defining few  short virtual functions (See the [integrating](#integrating)).
 
-* We use modern C++ and templates to achieve convertibility between all types of data in a transparent manner (See the [examples](#examples)). STL-like containers hold the results, and we use a simple syntax analogous to [PHP data objects](http://php.net/manual/en/book.pdo.php).
+* We use modern C++ and templates to achieve convertibility between all types of data in a transparent manner (See the [examples](#examples)). STL-like containers hold the results, and we use a simple syntax analogous to [![PHP data objects]](http://php.net/manual/en/book.pdo.php).
 
 Table of contents:
 
 - [Integrating](#integrating)
 - [Examples](#examples)
-    - [Connecting to a database](#connecting to a database)
+    - [Connecting to a database](#connecting-to-a-database)
     - [Simple queries](#simple-queries)
     - [Simple statements](#simple-statements)
     - [Fetching results](#fetching-results)
@@ -28,7 +28,9 @@ Table of contents:
     - [Note on compilers](#note-on-compilers)
     - [Other issues](#other-issues)
 
-the header `data_object.h` defines the base data object. The derived drivers are in the folder `driver`. They are all in the folder [`include`](https://github.com/alandefreitas/include/). Example:
+## Integrating
+
+The header `data_object.h` defines the base data object. The derived drivers are in the folder `driver`. They are all in the folder [`include`](https://github.com/alandefreitas/include/). Example:
 
 ```cpp
 #include "driver/pgsql.h"
